@@ -12,7 +12,6 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsscraper";
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = global.Promise;
 
-console.log(MONGODB_URI)
 // Connect to the Mongo DB
 mongoose.connect(MONGODB_URI);
 

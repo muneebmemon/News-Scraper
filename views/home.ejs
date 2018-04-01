@@ -1,20 +1,40 @@
 <% include partials/header.ejs %>
 
-<body>
-<div class="jumbotron">
-    <div class='header'>
-    <h1 class="display-4">Chicago Tribune News Scraper</h1>
-    <p class="lead">Welcome to the most amazing News Scraper website ever made :)</p>
-    <p>Get the latest news articles from Chicago Tribune right here.</p>
-    </div>
-</div>
+<h3 id='mainheadinglatestarticles'>Latest Articles</h3>
+<hr>
 
 <% for (let i=0 ; i < data.length ; i++) { %>
     <div class='articles'>
-        <button type="button" class="btn btn-success">Save Article!</button>
+        <button type="button" class="btn btn-success btnSaveArticle">Save Article!</button>
         <a href='http://www.chicagotribune.com<%=data[i].url %>' target='_blank'><h3><%=data[i].headline %></h3></a>
         <p><%=data[i].summary %></p>
     </div>
 <% } %>
+
+
+<button type="button" class="btn btn-primary" style='display:none;' data-toggle="modal" data-target="#exampleModal">
+    
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">News Scraper - Saving Article</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id='modalSaveArticle'>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

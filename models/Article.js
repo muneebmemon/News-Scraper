@@ -13,7 +13,9 @@ var articleSchema = new Schema({
         required: [true, 'Summary is required']
     },
     url : {
-        type: String
+        type: String,
+        unique: true,
+        trim: true
     },
     commments : [
         {

@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var cheerio = require('cheerio');
+var db = require('../models');
 
 var router = new express.Router;
 
@@ -42,9 +43,40 @@ router.get('/', (req , res) => {
         });
 
         res.render('home' , {data: articles});
-  });
+  });    
+});
 
-    
+// route to saved articles
+router.get('/savedarticles' , (req,res)=>{
+    db.Article.find()
+      .then(articles=>{
+        res.render('savedarticles', {data:articles});
+      })
+      .catch(err=>{
+        res.status(400).json(err);
+      });
+});
+
+// route to save articles in the database
+router.post('/savethearticle' , (req,res)=>{
+    db.Article.create(req.body)
+      .then(article=>{
+          res.status(200).json("{'status':'added'}");
+      })
+      .catch(err=>{
+          res.status(400).json("{'status':'not added'}");
+      });
+});
+
+// route to delete articles from database
+router.post('/deletethearticle' , (req,res)=>{
+    db.Article.findOneAndRemove({url:req.body.url})
+      .then(article => {
+        res.status(200).json("{'status':'deleted'}");
+      })
+      .catch(err => {
+        res.status(400).json("{'status':'not deleted'}");
+      });
 });
 
 module.exports = router;
