@@ -1,0 +1,44 @@
+.jumbotron {
+    background-image: url('../images/newsbg.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.header{
+    padding: 20px 0;;
+    text-align: center;
+    color : white;
+}
+
+.articles {
+    padding: 0px 15px;
+    background: darkgray;
+    border: 1px solid lightslategrey;
+    border-radius: 10px 10px;
+    margin: 0px 10px 10px 10px;
+}
+
+.articles h3{
+    color: darkslateblue;
+}
+
+.articles p {
+    color: black;
+}
+
+.articles a{
+    text-decoration: none;
+}
+
+.articles button{
+    float:right;
+}
+
+.articles button::after{
+    clear: both;
+    content: '';
+    display: block;
+}

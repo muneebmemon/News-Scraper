@@ -2,22 +2,19 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var request = require('request');
-var cheerio = require('cheerio');
 
 // initializing express app
 var app = express();
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newscraper";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsscraper";
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = global.Promise;
 
+console.log(MONGODB_URI)
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI, {
-  useMongoClient: true
-});
+mongoose.connect(MONGODB_URI);
 
 // setting up app port
 const PORT = process.env.PORT || 3000;
@@ -38,6 +35,6 @@ app.use(bodyParser.json());
 app.use('/' , require('./routes/regularRoutes'));
 
 // listening to port
-app.listen(PORT , ()=>{
+app.listen(PORT , () => {
     console.log(`Listening at port : ${PORT}`);
 });
