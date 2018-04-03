@@ -1,10 +1,13 @@
 <% include partials/header.ejs %>
-    <h3 id='mainheadingsavedarticles'>Saved Articles</h3>
-    <hr>
+
+    <div id='divmainheading'>
+        <h3 id='mainheadingsavedarticles'>Saved Articles</h3>
+    </div>
+    
     <% for (let i=0 ; i < data.length ; i++) { %>
         <div class='articles'>
             <button type="button" class="btn btn-success btnSavedArticle btndelete" data-url='<%=data[i].url %>'>Delete Article!</button>
-            <button type="button" class="btn btn-success btnSavedArticle btncomment" data-url='<%=data[i].url %>'>Comments</button>
+            <button type="button" class="btn btn-success btnSavedArticle btncomment" data-id='<%=data[i]._id %>'>Comments</button>
             <a href='<%=data[i].url %>' target='_blank'>
                 <h3>
                     <%=data[i].headline %>
@@ -15,6 +18,7 @@
             </p>
         </div>
     <% } %>
+
 <button type="button" class="btn btn-primary" style='display:none;' data-toggle="modal" data-target="#exampleModal">
 
 </button>
@@ -24,13 +28,39 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">News Scraper - Delete Article</h4>
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id='modalDeleteArticle'>
+            <div class="modal-body" id='exampleModalBody'>
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id='btndelclose'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" style='display:none;' data-toggle="modal" data-target="#commentsModal">
+
+</button>
+
+<!-- Comment Modal -->
+<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="commentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="commentsModalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id='commentsModalBody'>
+                <h5 id='commentArticleHeadline'></h5>
+                <input type=text id='username' placeholder='Your name' column=50 required>
+                <input type=text id='commentDesc' placeholder='Your comments on this Article' required>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id='btndelclose'>Close</button>

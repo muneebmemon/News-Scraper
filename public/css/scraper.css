@@ -4,7 +4,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     padding: 0;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .header{
@@ -15,14 +15,24 @@
 
 #mainheadingsavedarticles, #mainheadinglatestarticles{
     text-align: center;
-    color: darkmagenta;
-    margin-bottom: 0px;
+    color: lightyellow;
+    padding-bottom: 5px;
 }
 
-hr {
-    margin-bottom: 8px;
-    margin-top: 5px;
-    padding: 0px;
+#commentArticleHeadline {
+    color: #007BFF;
+    text-align: center;
+}
+
+input{
+    width: 100%;
+    border: 1px solid black;
+    margin: 5px 0px;
+}
+
+#divmainheading{
+    background-color: #007BFF;
+    margin-bottom: 5px;
 }
 
 .articles {

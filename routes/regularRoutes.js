@@ -57,6 +57,18 @@ router.get('/savedarticles' , (req,res)=>{
       });
 });
 
+// route to get comments
+router.get('/getcomments/:id' , (req , res)=>{
+    db.Article.findById(req.params.id , '-summary')
+      .populate('comments')
+      .then(article=>{
+          res.status(200).json(article);
+      })
+      .catch(err=>{
+          res.status(400).json("{'status':'error'}");
+      });
+});
+
 // route to save articles in the database
 router.post('/savethearticle' , (req,res)=>{
     db.Article.create(req.body)

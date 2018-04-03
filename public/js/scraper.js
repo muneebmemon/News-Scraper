@@ -4,6 +4,23 @@ $(function(){
     const $btnComment = $('.btncomment');
     const $btnDelete = $('.btndelete');
 
+    //binding click event to comment button
+    $btnComment.on('click' , function(){
+       let id = $(this).data('id');
+       
+       $.ajax({ method: "GET", url: `/getcomments/${id}` })
+         .done(function(data) {
+           $("#commentsModalLabel").text("News Scraper - Comments on Article");  
+           $('#commentArticleHeadline').text(data.headline);
+           $("#commentsModal").modal("show");
+         })
+         .fail(function(data) {
+           $("#exampleModalLabel").text("News Scraper - Comments on Article");  
+           $("#exampleModalBody").html("<h5>There was an error fetching comments. Please try again later.</h5>");
+           $("#exampleModal").modal("show");
+         });
+    });
+
     //binding click event to delete article buttons
     $btnDelete.on('click' , function(){
         let url = $(this).data('url');
@@ -14,11 +31,13 @@ $(function(){
           data: {url:url}
         })
           .done(function(data) {
-            $("#modalDeleteArticle").html("<h5>Article was deleted successfully.</h5>");
+            $('#exampleModalLabel').text('News Scraper - Delete Article');  
+            $("#exampleModalBody").html("<h5>Article was deleted successfully.</h5>");
             $("#exampleModal").modal("show");
           })
           .fail(function(data) {
-            $("#modalDeleteArticle").html("<h5>There was an error in deleting Article. Please try again later.</h5>");
+            $("#exampleModalLabel").text("News Scraper - Delete Article");    
+            $("#exampleModalBody").html("<h5>There was an error in deleting Article. Please try again later.</h5>");
             $("#exampleModal").modal("show");
           });
     });
