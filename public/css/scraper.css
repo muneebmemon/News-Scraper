@@ -35,6 +35,11 @@ input{
     margin-bottom: 5px;
 }
 
+#submitComment{
+    margin: 5px 0px 0px 0px;
+    width: 100%;
+}
+
 .articles {
     padding: 0px 15px;
     background: darkgray;

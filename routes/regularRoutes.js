@@ -91,4 +91,16 @@ router.post('/deletethearticle' , (req,res)=>{
       });
 });
 
+// route to saving comments to database
+router.post('/submitcomments' , (req,res)=>{
+    var commentData = {username:req.body.username,commentDesc:req.body.commentDesc};
+    db.Article.findOneAndUpdate({'_id':req.body.id},{$push:{comments: commentData}})
+      .then(article => {
+        res.status(200).json(article);
+      })
+      .catch(err => {
+        res.status(400).json("{'status':'not added'}");
+      });
+});
+
 module.exports = router;

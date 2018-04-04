@@ -1,8 +1,39 @@
 $(function(){
+
     // storing reference to buttons
     const $btnSaveArticle = $('.btnSaveArticle');
     const $btnComment = $('.btncomment');
     const $btnDelete = $('.btndelete');
+    const $btnSubmitComment = $('#submitComment');
+
+    //binding click event to submit comment button
+    $btnSubmitComment.on('click' , function(){
+       var commentData = {
+        id:$('#commentID').text(),
+        username: $('#username').val().trim(),
+        commentDesc: $('#commentDesc').val().trim()
+      };
+
+      $("#username").val("");
+      $("#commentDesc").val("");
+
+       $.ajax({method:'POST', url: '/submitcomments' , data:commentData})
+        .done(function(data){
+          $commentUC = $("<div>");
+          $commentUC.addClass("commentList");
+          // $commentUC.attr("data-id", data.comments);
+          $commentUC.html(`
+             <h6>${commentData.username} : ${commentData.commentDesc}</h6>
+             <button style='display:inline-block;float:right;padding:0px 5px;' class='btn btn-danger delComment'>x</button>
+             `);
+          $("#commentsList").prepend($commentUC);
+        })
+        .fail(function(data){
+          $("#exampleModalLabel").text("News Scraper - Comments on Article");
+          $("#exampleModalBody").html("<h5>There was an error saving comment. Please try again later.</h5>");
+          $("#exampleModal").modal("show");
+        });
+    });
 
     //binding click event to comment button
     $btnComment.on('click' , function(){
@@ -12,6 +43,21 @@ $(function(){
          .done(function(data) {
            $("#commentsModalLabel").text("News Scraper - Comments on Article");  
            $('#commentArticleHeadline').text(data.headline);
+           $('#commentID').text(data._id);
+           $("#commentsList").html('');
+
+           data.comments.forEach(comment => {
+             $commentUC = $('<div>');
+             $commentUC.addClass('commentList');
+             $commentUC.attr('data-id' , comment._id);
+             $commentUC.html(`
+             <h6>${comment.username} : ${comment.commentDesc}</h6>
+             <button style='display:inline-block;float:right;padding:0px 5px;' class='btn btn-danger delComment'>x</button>
+             `);
+             $('#commentsList').prepend($commentUC);
+           });
+
+      
            $("#commentsModal").modal("show");
          })
          .fail(function(data) {
@@ -20,6 +66,7 @@ $(function(){
            $("#exampleModal").modal("show");
          });
     });
+
 
     //binding click event to delete article buttons
     $btnDelete.on('click' , function(){

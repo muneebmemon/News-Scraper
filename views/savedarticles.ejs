@@ -59,8 +59,14 @@
             </div>
             <div class="modal-body" id='commentsModalBody'>
                 <h5 id='commentArticleHeadline'></h5>
+                <p style='display:none;' id='commentID' data-id=''></p>
                 <input type=text id='username' placeholder='Your name' column=50 required>
                 <input type=text id='commentDesc' placeholder='Your comments on this Article' required>
+                <button class='btn btn-primary' id='submitComment' data-id=''>Submit Comment</button>
+                <hr>
+                <div id='commentsList'>
+
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id='btndelclose'>Close</button>
