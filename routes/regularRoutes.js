@@ -46,7 +46,7 @@ router.get('/', (req , res) => {
   });    
 });
 
-// route to saved articles
+// route for saved articles
 router.get('/savedarticles' , (req,res)=>{
     db.Article.find()
       .then(articles=>{
@@ -57,7 +57,7 @@ router.get('/savedarticles' , (req,res)=>{
       });
 });
 
-// route to get comments
+// route for getting comments
 router.get('/getcomments/:id' , (req , res)=>{
     db.Article.findById(req.params.id , '-summary')
       .populate('comments')
@@ -69,7 +69,7 @@ router.get('/getcomments/:id' , (req , res)=>{
       });
 });
 
-// route to save articles in the database
+// route for saving articles in the database
 router.post('/savethearticle' , (req,res)=>{
     db.Article.create(req.body)
       .then(article=>{
@@ -80,7 +80,7 @@ router.post('/savethearticle' , (req,res)=>{
       });
 });
 
-// route to delete articles from database
+// route for delete articles from database
 router.post('/deletethearticle' , (req,res)=>{
     db.Article.findOneAndRemove({url:req.body.url})
       .then(article => {
@@ -91,16 +91,29 @@ router.post('/deletethearticle' , (req,res)=>{
       });
 });
 
-// route to saving comments to database
+// route for saving comments to database
 router.post('/submitcomments' , (req,res)=>{
     var commentData = {username:req.body.username,commentDesc:req.body.commentDesc};
-    db.Article.findOneAndUpdate({'_id':req.body.id},{$push:{comments: commentData}})
+    db.Article.findOneAndUpdate({'_id':req.body.id},{$push:{comments: commentData}}, {new:true})
       .then(article => {
         res.status(200).json(article);
       })
       .catch(err => {
         res.status(400).json("{'status':'not added'}");
       });
+});
+
+// route for delete comments
+router.delete('/delcomments/:aID/:cID' , (req,res)=>{
+    db.Article.findOneAndUpdate({ 'comments._id': req.params.cID }, { $pull: { 'comments': { '_id': req.params.cID }}} , {new:true})
+      .then(article => {
+        res.status(200).json(article);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json("{'status':'not deleted'}");
+      });
+    
 });
 
 module.exports = router;

@@ -40,6 +40,21 @@ input{
     width: 100%;
 }
 
+.delComment{
+    float:right;
+    padding: 0px 5px;
+    margin-top: 2px;
+}
+
+.commentList{
+    height: 5vh;
+    overflow: hidden;
+}
+
+.commentList:nth-child(odd){
+    background-color: #dae7fa;
+}
+
 .articles {
     padding: 0px 15px;
     background: darkgray;

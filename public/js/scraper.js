@@ -4,12 +4,33 @@ $(function(){
     const $btnSaveArticle = $('.btnSaveArticle');
     const $btnComment = $('.btncomment');
     const $btnDelete = $('.btndelete');
+    const $btnDelComment = $(".delComment");
     const $btnSubmitComment = $('#submitComment');
+
+    //binding click event to delete button
+    $('#commentsList').on('click' , '.delComment' , function(){
+       var commentDIV = $(this).parent();
+       var commentId = $(this).parent().data('id');
+       var articleId = $("#articleID").text();
+
+       $.ajax({
+         method: 'DELETE',
+         url: `/delcomments/${articleId}/${commentId}`
+       })
+        .done(function(data){
+          commentDIV.remove();
+        })
+        .fail(function(data){
+          $("#exampleModalLabel").text("News Scraper - Comments on Article");
+          $("#exampleModalBody").html("<h5>There was an error deleting comment. Please try again later.</h5>");
+          $("#exampleModal").modal("show");
+        });
+    });
 
     //binding click event to submit comment button
     $btnSubmitComment.on('click' , function(){
        var commentData = {
-        id:$('#commentID').text(),
+        id:$('#articleID').text(),
         username: $('#username').val().trim(),
         commentDesc: $('#commentDesc').val().trim()
       };
@@ -21,11 +42,12 @@ $(function(){
         .done(function(data){
           $commentUC = $("<div>");
           $commentUC.addClass("commentList");
-          // $commentUC.attr("data-id", data.comments);
-          $commentUC.html(`
-             <h6>${commentData.username} : ${commentData.commentDesc}</h6>
-             <button style='display:inline-block;float:right;padding:0px 5px;' class='btn btn-danger delComment'>x</button>
-             `);
+          $commentUC.attr("data-id", data.comments[data.comments.length-1]._id);
+          $commentUC.html
+          (`
+          <button class='btn btn-danger delComment'>x</button>   
+          <h6 style='max-height:100%; font-size:0.8rem;'>${commentData.username} : ${commentData.commentDesc}</h6>
+          `);
           $("#commentsList").prepend($commentUC);
         })
         .fail(function(data){
@@ -43,7 +65,7 @@ $(function(){
          .done(function(data) {
            $("#commentsModalLabel").text("News Scraper - Comments on Article");  
            $('#commentArticleHeadline').text(data.headline);
-           $('#commentID').text(data._id);
+           $('#articleID').text(data._id);
            $("#commentsList").html('');
 
            data.comments.forEach(comment => {
@@ -51,8 +73,8 @@ $(function(){
              $commentUC.addClass('commentList');
              $commentUC.attr('data-id' , comment._id);
              $commentUC.html(`
-             <h6>${comment.username} : ${comment.commentDesc}</h6>
-             <button style='display:inline-block;float:right;padding:0px 5px;' class='btn btn-danger delComment'>x</button>
+             <button class='btn btn-danger delComment'>x</button>
+             <h6 style='max-height:100%; font-size: 0.8rem;'>${comment.username} : ${comment.commentDesc}</h6>
              `);
              $('#commentsList').prepend($commentUC);
            });
