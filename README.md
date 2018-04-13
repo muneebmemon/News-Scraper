@@ -1,4 +1,5 @@
-# News-Scraper
+# News Scrapping app
+
 Simple news scraping app. This app scrapes latest news articles from Chicago Tribune's website. This app also lets you to save those articles and allows to comment on those saved articles.
 
 * Homepage displays the latest news articles from Chicago Tribune's website
